@@ -1,0 +1,74 @@
+# created by virtualenv automatically
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+
+# Keep the directory but ignore all its contents
+proxy/certbot/conf/*
+!proxy/certbot/conf/.gitkeep
+
+proxy/certbot/conf/live/*
+!proxy/certbot/conf/live/.gitkeep
+
+proxy/certbot/logs/*
+!proxy/certbot/logs/.gitkeep
+
+proxy/nginx-logs/*
+!proxy/nginx-logs/error.log
+!proxy/nginx-logs/access.log
+
+proxy/config/backups/*
+!proxy/config/backups/.gitkeep
+
+proxy/nginx/sites-enabled/*
+!proxy/nginx/sites-enabled/.gitkeep
+
+proxy/nginx/conf.d/*
+!proxy/nginx/conf.d/.gitkeep
+
+proxy/botblocker/repo/*
+!proxy/botblocker/repo/.gitkeep
+
+proxy/certbot/www/.well-known/acme-challenge/*
+!proxy/certbot/www/.well-known-acme-challenge/.gitkeep
+
+# State & log files
+*.log
+*.state
+
+# macOS
+.DS_Store
+
+# Environment files
+.env
+.env.*                # any other dotenv files
+
+# Editor/IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Python tool caches
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Shell history
+*.history
+*.bash_history
+*.zsh_history
+
+# Swap & temporary files
+*~
+*.swp
+*.swo
+*.tmp
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+

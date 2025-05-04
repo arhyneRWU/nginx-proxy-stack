@@ -1,0 +1,15 @@
+services:
+  hello2:
+    build: .
+    container_name: hello2-service
+    restart: unless-stopped
+
+    expose:
+      - "8000"
+
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    external: true

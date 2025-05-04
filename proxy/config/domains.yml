@@ -1,0 +1,23 @@
+#websites/proxy/config/domains.yml
+sites:
+  hello1:
+    hostnames:
+      - hello1.local
+    upstream:
+      name: hello1_backend
+      servers:
+        - host: hello1-service
+          port: 8000
+    client_max_body_size: 1M
+    force_https: false
+
+  hello2:
+    hostnames:
+      - hello2.local
+    upstream:
+      name: hello2_backend
+      servers:
+        - host: hello2-service
+          port: 8000
+    client_max_body_size: 1M
+    force_https: true

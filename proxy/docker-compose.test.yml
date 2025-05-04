@@ -1,0 +1,44 @@
+# websites/proxy/docker-compose.test.yml
+# version: "3.8" is deprecated we're in v2
+services:
+  proxy:
+    build: .
+    container_name: nginx-proxy
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      # 1) static configs
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/snippets:/etc/nginx/snippets:ro
+
+      # 2) generated vhosts (rw so deploy.sh can write)
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled:rw
+
+      # 3) ACME webroot
+      - ./certbot/www:/var/www/certbot:ro
+
+      # 4) Cert tree (rw so deploy.sh + certbot can write)
+      - ./certbot/conf:/etc/letsencrypt:rw
+
+      # 5) Botblocker
+      - ./botblocker/repo/conf.d/globalblacklist.conf:/etc/nginx/blocker-conf/globalblacklist.conf:ro
+      - ./botblocker/repo/conf.d/botblocker-nginx-settings.conf:/etc/nginx/blocker-conf/botblocker-nginx-settings.conf:ro
+      - ./botblocker/repo/bots.d:/etc/nginx/bots.d:ro
+      - ./botblocker/repo/ddos.d:/etc/nginx/ddos.d:ro
+      - ./botblocker/repo/deny.d:/etc/nginx/deny.d:ro
+
+      # 6) Logs
+      - ./nginx-logs:/var/log/nginx:rw
+
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    external: true
+

@@ -1,0 +1,16 @@
+services:
+  hello1:
+    build: .
+    container_name: hello1-service
+    restart: unless-stopped
+
+    # only exposed on Docker network, not published to host
+    expose:
+      - "8000"
+
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    external: true

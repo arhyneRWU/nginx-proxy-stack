@@ -1,0 +1,76 @@
+# --- upstream block ---
+upstream {{ upstream.name }} {
+    zone {{ upstream.name }} 64k;
+{% for srv in upstream.servers %}
+    server {{ srv.host }}:{{ srv.port }} resolve;
+{% endfor %}
+}
+
+# --- HTTP vhost ---
+server {
+    listen      80;
+    server_name {{ hostnames | join(" ") }};
+
+    client_max_body_size {{ client_max_body_size|default('1M') }};
+
+    # Still allow ACME challenges over HTTP
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type text/plain;
+    }
+
+    {# If force_https is true, redirect everything else #}
+    {% if force_https %}
+    location / {
+        return 301 https://$host$request_uri;
+    }
+    {% else %}
+    location / {
+        include /etc/nginx/bots.d/blockbots.conf;
+        include /etc/nginx/ddos.d/ddos.conf/*.conf;
+        include /etc/nginx/deny.d/*.conf;
+
+        proxy_pass         http://{{ upstream.name }};
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+    {% endif %}
+
+    access_log  /var/log/nginx/{{ hostnames[0] }}-80-access.log;
+    error_log   /var/log/nginx/{{ hostnames[0] }}-80-error.log;
+}
+
+# --- HTTPS vhost ---
+server {
+    listen       443 ssl;
+    server_name  {{ hostnames | join(" ") }};
+
+    client_max_body_size {{ client_max_body_size | default('1M') }};
+
+    ssl_certificate     /etc/letsencrypt/live/{{ hostnames[0] }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ hostnames[0] }}/privkey.pem;
+    ssl_protocols       TLSv1.3;
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type text/plain;
+    }
+
+    location / {
+        include /etc/nginx/bots.d/blockbots.conf;
+        include /etc/nginx/ddos.d/ddos.conf/*.conf;
+        include /etc/nginx/deny.d/*.conf;
+
+        proxy_pass         http://{{ upstream.name }};
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+
+    access_log  /var/log/nginx/{{ hostnames[0] }}-access.log;
+    error_log   /var/log/nginx/{{ hostnames[0] }}-error.log;
+}
