@@ -15,6 +15,9 @@ proxy/certbot/conf/live/*
 proxy/certbot/logs/*
 !proxy/certbot/logs/.gitkeep
 
+proxy/certbot/www/.well-known/acme-challenge/*
+!proxy/certbot/www/.well-known-acme-challenge/.gitkeep
+
 proxy/nginx-logs/*
 !proxy/nginx-logs/error.log
 !proxy/nginx-logs/access.log
@@ -31,8 +34,7 @@ proxy/nginx/conf.d/*
 proxy/botblocker/repo/*
 !proxy/botblocker/repo/.gitkeep
 
-proxy/certbot/www/.well-known/acme-challenge/*
-!proxy/certbot/www/.well-known-acme-challenge/.gitkeep
+
 
 # State & log files
 *.log
