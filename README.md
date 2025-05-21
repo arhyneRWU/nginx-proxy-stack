@@ -1,7 +1,7 @@
 # nginx-proxy-stack
 A Dockerized, template‑driven Nginx reverse‑proxy boilerplate featuring integrated BotBlocker and Let’s Encrypt support, dynamic Jinja2‑powered site configuration, and a single deploy script for both test and production environments.
-
-
+~~~~
+~~~~
 - **Automatic** Jinja2‑based site config generation
 - **BotBlocker** & DDOS protection
 - **Let’s Encrypt** support via Certbot (with dummy certs for local development)
