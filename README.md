@@ -1,10 +1,10 @@
 # nginx-proxy-stack
-A Dockerized, template‑driven Nginx reverse‑proxy boilerplate featuring integrated BotBlocker and Let’s Encrypt support, dynamic Jinja2‑powered site configuration, and a single deploy script for both test and production environments.
-~~~~
-~~~~
-- **Automatic** Jinja2‑based site config generation
+A Dockerized, templatedriven Nginx reverseproxy boilerplate featuring integrated BotBlocker and LetsEncrypt support, dynamic Jinja2powered site configuration, and a single deploy script for both test and production environments.
+
+
+- **Automatic** Jinja2based site config generation
 - **BotBlocker** & DDOS protection
-- **Let’s Encrypt** support via Certbot (with dummy certs for local development)
+- **Lets Encrypt** support via Certbot (with dummy certs for local development)
 - A single **deploy.sh** script for test vs production workflows
 -  **dynamic DNS resolution** for upstreams
 
@@ -12,9 +12,9 @@ A Dockerized, template‑driven Nginx reverse‑proxy boilerplate featuring inte
 
 ## Features
 
-- **Multi‑domain support** with per‑site upload limits and HTTPS enforcement
-- **force_https** flag to redirect all HTTP → HTTPS (while still serving ACME challenges)
-- **BotBlocker integration** (Yandex/nginx‑blocker) for bad‑bot blacklisting
+- **Multidomain support** with persite upload limits and HTTPS enforcement
+- **force_https** flag to redirect all HTTP  HTTPS (while still serving ACME challenges)
+- **BotBlocker integration** (Yandex/nginxblocker) for badbot blacklisting
 - **Dynamic upstream resolution** (resolve hostnames at request time)
 - **Single deploy script**:
   - `./scripts/deploy.sh` (test mode by default)
@@ -25,8 +25,8 @@ A Dockerized, template‑driven Nginx reverse‑proxy boilerplate featuring inte
 
 ## Prerequisites
 
-- Docker Engine & Docker Compose v2+
-- Python 3.9+
+- DockerEngine & DockerCompose v2+
+- Python3.9+
 - Administrator access to edit `/etc/hosts`
 - Tested on macOS and Linux
 

@@ -6,6 +6,8 @@ __pycache__/
 venv/
 
 # Keep the directory but ignore all its contents
+/proxy/botblocker/repo
+
 proxy/certbot/conf/*
 !proxy/certbot/conf/.gitkeep
 
@@ -30,6 +32,9 @@ proxy/nginx/sites-enabled/*
 
 proxy/nginx/conf.d/*
 !proxy/nginx/conf.d/.gitkeep
+
+proxy/nginx/snippets/*
+!proxy/nginx/snippets/.gitkeep
 
 proxy/botblocker/repo/*
 !proxy/botblocker/repo/.gitkeep
@@ -73,4 +78,5 @@ htmlcov/
 # OS-specific
 Thumbs.db
 ehthumbs.db
+
 
