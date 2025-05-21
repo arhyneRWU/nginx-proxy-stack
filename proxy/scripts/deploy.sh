@@ -39,19 +39,25 @@ if ! docker network inspect webnet >/dev/null 2>&1; then
   docker network create webnet
 fi
 
-# 3) Create & activate a project-local virtual environment
-if [[ ! -d .venv ]]; then
-  echo "▶ Creating Python virtual environment at .venv"
-  python3 -m venv .venv
-fi
+# 2.5) Ensure Python venv support is installed
+echo "▶ Ensuring python3-venv is available"
+sudo apt-get update
+sudo apt-get install -y python3-venv
 
+# 3) Create & activate a project-local virtual environment
+VENV_DIR=".venv"
+if [[ ! -d "$VENV_DIR" ]]; then
+  echo "▶ Creating Python virtual environment at $VENV_DIR"
+  python3 -m venv "$VENV_DIR"
+fi
 echo "▶ Activating virtual environment"
 # shellcheck disable=SC1091
-source .venv/bin/activate
+source "$VENV_DIR/bin/activate"
 
 # 4) Install Python deps for config generation into .venv
 echo "▶ Installing Python packages in virtual environment"
 pip install --no-cache-dir jinja2 pyyaml
+
 
 
 # 5) Make helper scripts executable
